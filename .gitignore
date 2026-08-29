@@ -1,0 +1,41 @@
+# Terraform: local state, provider downloads, and variable files can contain secrets.
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+
+# Let's Encrypt / Certbot runtime files
+certbot/
+letsencrypt/
+
+# Logs and editor/OS files
+*.log
+logs/
+.DS_Store
+.idea/
+.vscode/
