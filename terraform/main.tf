@@ -12,10 +12,9 @@ terraform {
 provider "azurerm" {
   features {}
 
-  # Register only the Azure providers explicitly needed by this stack. This
-  # prevents Terraform from waiting for unrelated providers (for example,
-  # Microsoft.Cache) during its first run in a subscription.
-  resource_provider_registrations = "none"
+  # Required Azure providers are registered explicitly before deployment.
+  # AzureRM 3.x otherwise attempts unrelated provider registrations too.
+  skip_provider_registration = true
 }
 
 resource "azurerm_resource_group" "web" {
