@@ -108,7 +108,7 @@ resource "azurerm_linux_virtual_machine" "web" {
   name                            = "vm-docker-app"
   resource_group_name             = azurerm_resource_group.web.name
   location                        = azurerm_resource_group.web.location
-  size                            = "Standard_B1s"
+  size                            = "Standard_D2s_v3"
   admin_username                  = var.admin_username
   disable_password_authentication = true
   network_interface_ids           = [azurerm_network_interface.web.id]
