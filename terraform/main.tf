@@ -11,6 +11,11 @@ terraform {
 
 provider "azurerm" {
   features {}
+
+  # Register only the Azure providers explicitly needed by this stack. This
+  # prevents Terraform from waiting for unrelated providers (for example,
+  # Microsoft.Cache) during its first run in a subscription.
+  resource_provider_registrations = "none"
 }
 
 resource "azurerm_resource_group" "web" {
