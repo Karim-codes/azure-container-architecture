@@ -35,6 +35,11 @@ These screenshots were captured while the production deployment was live. The VM
 
 The topology shows the public traffic path: static Public IP (`pip-web-prod`) → network interface (`nic-web-prod`) → VM (`vm-docker-app`) within the custom VNet and subnet. The NSG is associated with the NIC, and SSH access is restricted by CIDR.
 
+### Cost & Budget Controls
+
+- **Monthly budget cap:** Azure Cost Management is configured with a **$5 USD monthly budget** and email alerts at 50%, 80%, and 100% of actual spend.
+- **Resource management:** The VM is deallocated outside active demonstration windows to avoid unnecessary compute charges.
+
 ## Stack
 
 - Microsoft Azure: resource group, VNet, subnet, static public IP, NSG, and VM
@@ -91,7 +96,7 @@ docker compose up -d nginx_proxy
 
 ## Security notes
 
-- SSH is restricted to `my_ip`; HTTP and HTTPS are public.
+- SSH is restricted to `var.my_ip`; HTTP and HTTPS are open to public traffic.
 - Terraform state and provider files are ignored. Use an encrypted remote Terraform backend before team or production use.
 - The Git URL must be public because cloud-init clones it without credentials.
 - Treat the VM's initial cloud-init configuration as immutable. Updating the repository later requires SSHing to the VM and running `git pull && docker compose up -d --build`, or implementing a deployment pipeline.
