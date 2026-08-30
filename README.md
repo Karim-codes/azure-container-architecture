@@ -21,6 +21,20 @@ Azure Public IP → NSG → Ubuntu 22.04 VM
                     Docker Compose
 ```
 
+## Deployment evidence
+
+These screenshots were captured while the production deployment was live. The VM may be deallocated outside demonstration periods to control Azure costs; the images document the verified HTTPS deployment and the provisioned Azure network.
+
+### Live HTTPS application
+
+![Live FastAPI dashboard served over HTTPS](docs/images/live-https-dashboard.png)
+
+### Azure network topology
+
+![Azure topology showing the VNet, subnet, NSG, public IP, NIC, and VM](docs/images/azure-network-topology.png)
+
+The topology shows the public traffic path: static Public IP (`pip-web-prod`) → network interface (`nic-web-prod`) → VM (`vm-docker-app`) within the custom VNet and subnet. The NSG is associated with the NIC, and SSH access is restricted by CIDR.
+
 ## Stack
 
 - Microsoft Azure: resource group, VNet, subnet, static public IP, NSG, and VM
