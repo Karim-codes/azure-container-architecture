@@ -1,0 +1,31 @@
+.git
+.gitignore
+.dockerignore
+
+# Terraform local state and provider cache
+.terraform/
+terraform/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+
+# Runtime secrets and certificates
+.env
+.env.*
+certbot/
+letsencrypt/
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local/editor/runtime noise
+__pycache__/
+*.py[cod]
+*.log
+logs/
+.DS_Store
+.idea/
+.vscode/

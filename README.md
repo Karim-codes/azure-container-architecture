@@ -54,18 +54,26 @@ Confirm the plan when Terraform prompts. The deployment output includes the stat
 
 ## HTTPS / Let's Encrypt
 
-The checked-in Nginx configuration intentionally starts on HTTP only, allowing the initial DNS validation and ACME HTTP-01 challenge to succeed. Port 443 is exposed by Docker Compose and allowed by the NSG for the TLS configuration you install after certificate issuance.
+The Nginx container starts in HTTP mode until a Let's Encrypt certificate exists. After certificate issuance, it automatically switches to the TLS configuration on the next container restart.
 
-After the A record resolves to the VM, issue a certificate on the host (replace the email):
+After the DNS A record resolves to the VM, SSH into the server and issue the certificate:
 
 ```bash
-sudo apt-get update && sudo apt-get install -y certbot
-sudo systemctl stop docker
-sudo certbot certonly --standalone -d cloudProject.coderaxa.com -m you@example.com --agree-tos --no-eff-email
-sudo systemctl start docker
+ssh azureuser@40.120.63.116
+cd ~/app
+git pull
+./scripts/issue-cert.sh cloudproject.coderaxa.com you@example.com
 ```
 
-Then mount `/etc/letsencrypt` read-only into `nginx_proxy` and use an Nginx TLS server block for port 443 that proxies to `http://api:8000`; redirect port 80 to HTTPS. Do not commit certificate material: local `certbot/`, `letsencrypt/`, keys, and `.env` files are ignored.
+Replace `you@example.com` with the email address for Let's Encrypt expiry notices. Do not commit certificate material: local `certbot/`, `letsencrypt/`, keys, and `.env` files are ignored.
+
+To renew later:
+
+```bash
+cd ~/app
+docker compose run --rm certbot renew --webroot -w /var/www/certbot
+docker compose up -d nginx_proxy
+```
 
 ## Security notes
 
