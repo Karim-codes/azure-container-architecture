@@ -59,7 +59,7 @@ The Nginx container starts in HTTP mode until a Let's Encrypt certificate exists
 After the DNS A record resolves to the VM, SSH into the server and issue the certificate:
 
 ```bash
-ssh azureuser@40.120.63.116
+ssh azureuser@<public-ip-from-terraform-output>
 cd ~/app
 git pull
 ./scripts/issue-cert.sh cloudproject.coderaxa.com you@example.com
